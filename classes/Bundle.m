@@ -15,8 +15,8 @@ classdef Bundle < handle
         
         % Ray parameters
         nRays=0;
-        Ray=struct('next_position',[],'cur_angle',[],'step_size',[],'tracing',1,'p',0,'history',[]);
-        Chief_ray=struct('next_position',[],'cur_angle',[],'step_size',[],'tracing',1,'p',0,'history',[]);
+        Ray=struct('next_position',[],'cur_angle',[],'step_size',[],'tracing',1,'p',0,'color',[1 0 0],'history',[]);
+        Chief_ray=struct('next_position',[],'cur_angle',[],'step_size',[],'tracing',1,'p',0,'color',[0 0 1],'history',[]);
     end
     
     methods
@@ -42,6 +42,7 @@ classdef Bundle < handle
                         self.Ray(iRay).step_size=self.step_size;
                         self.Ray(iRay).tracing=1;
                         self.Ray(iRay).p=0;
+                        self.Ray(iRay).color=[1 0 0];
                         self.Ray(iRay).history=[];
                         if iRay==round(self.nRays/2)
                             self.Chief_ray=self.Ray(iRay);
@@ -58,6 +59,7 @@ classdef Bundle < handle
                         self.Ray(iRay).step_size=self.step_size;
                         self.Ray(iRay).tracing=1;
                         self.Ray(iRay).p=0;
+                        self.Ray(iRay).color=[1 0 0];
                         self.Ray(iRay).history=[];
                         if iRay==round(self.nRays/2)
                             self.Chief_ray=self.Ray(iRay);
