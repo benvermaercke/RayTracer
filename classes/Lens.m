@@ -10,7 +10,7 @@ classdef Lens < handle
         
         spatial_location=[0 0]; % mm
         angle=0; % rotation in radians
-        nPoints=51;
+        nPoints=151;
         index_of_refraction=1.517; % glass
         medium_index_of_refraction=1.00029; % air
         focal_length=[];

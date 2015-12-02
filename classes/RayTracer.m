@@ -73,8 +73,7 @@ classdef RayTracer < handle
             current_object.medium=0;
             current_object.index=0;
             current_object.object.index_of_refraction=self.IOR_air;
-            last_object=current_object;
-            step_nr=0;
+            last_object=current_object;            
             
             for iBundle=1:self.nBundles
                 Bundle=self.Bundles{iBundle};
@@ -84,6 +83,7 @@ classdef RayTracer < handle
                     Ray=Bundle.Ray(iRay);
                     transition=0;
                     
+                    step_nr=0;
                     while Ray.tracing==1
                         % Advance ray one step in direction of ray
                         next_position_temp=self.advance_ray(Ray);
@@ -91,7 +91,7 @@ classdef RayTracer < handle
                         y=next_position_temp(2);
                         
                         %%% Destroy if outside of plot area
-                        if ~inpolygon(x,y,self.x_range,self.x_range)
+                        if ~inpolygon(x,y,self.x_range,self.y_range)
                             Ray.tracing=0;
                         end
                         
@@ -251,8 +251,10 @@ classdef RayTracer < handle
             %%% Init Rays
             for iBundle=1:self.nBundles
                 bundle=self.Bundles{iBundle};
-                for iRay=1:bundle.nRays
-                    bundle.Ray(iRay).p=plot(self.x_range(1),self.y_range(1),'r-','markerSize',2);
+                for iRay=1:bundle.nRays                    
+                    Ray=bundle.Ray(iRay);                    
+                    Ray.color
+                    bundle.Ray(iRay).p=plot(self.x_range(1),self.y_range(1),'-','color',Ray.color,'markerSize',2);
                 end
                 bundle.Chief_ray.p=plot(self.x_range(1),self.y_range(1),'b-','lineWidth',2);
             end
@@ -275,7 +277,6 @@ classdef RayTracer < handle
                         set(Ray.p,'xData',M(:,1),'yData',M(:,2))
                     end
                 end
-                
             end
         end
         
