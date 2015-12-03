@@ -254,8 +254,7 @@ classdef RayTracer < handle
                 for iRay=1:bundle.nRays
                     Ray=bundle.Ray(iRay);                    
                     bundle.Ray(iRay).p=plot(self.x_range(1),self.y_range(1),'-','color',Ray.color,'lineWidth',Ray.thickness);
-                end
-                %bundle.Chief_ray.p=plot(self.x_range(1),self.y_range(1),'b-','lineWidth',2);
+                end                
             end
             
             axis([self.x_range self.y_range])
@@ -272,15 +271,8 @@ classdef RayTracer < handle
                 for iRay=1:Bundle.nRays
                     Ray=Bundle.Ray(iRay);
                     M=Ray.history;
-                    if ~isempty(M)
-                        %if iRay==round(Bundle.nRays/2)
+                    if ~isempty(M)                        
                         set(Ray.p,'xData',M(:,1),'yData',M(:,2))
-                        %end
-                        %if iRay==round(Bundle.nRays/2)
-                        %    set(Bundle.Chief_ray.p,'xData',M(:,1),'yData',M(:,2))
-                        %else
-                            
-                        %end
                     end
                 end
             end
