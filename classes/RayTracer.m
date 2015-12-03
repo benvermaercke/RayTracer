@@ -73,7 +73,7 @@ classdef RayTracer < handle
             current_object.medium=0;
             current_object.index=0;
             current_object.object.index_of_refraction=self.IOR_air;
-            last_object=current_object;            
+            last_object=current_object;
             
             for iBundle=1:self.nBundles
                 Bundle=self.Bundles{iBundle};
@@ -192,14 +192,14 @@ classdef RayTracer < handle
                                 
                                 %plot(x_mini,y_mini,'m*')
                                 %l=5;
-                                %plot([x_mini-l*cos(angle_normal) x_mini+l*cos(angle_normal)],[y_mini-l*sin(angle_normal) y_mini+l*sin(angle_normal)],'k-')                                
+                                %plot([x_mini-l*cos(angle_normal) x_mini+l*cos(angle_normal)],[y_mini-l*sin(angle_normal) y_mini+l*sin(angle_normal)],'k-')
                             end
                         end
                         
                         %%% Reset transition flag
                         if transition==1
                             transition=0;
-                            last_object=current_object;                            
+                            last_object=current_object;
                         end
                         
                         %%% Update position
@@ -220,7 +220,7 @@ classdef RayTracer < handle
                         %M(step_nr,:)=[step_nr iRay next_position(iRay,:)];
                     end
                 end
-            end            
+            end
         end
         
         function trace_ray(varargin)
@@ -251,12 +251,11 @@ classdef RayTracer < handle
             %%% Init Rays
             for iBundle=1:self.nBundles
                 bundle=self.Bundles{iBundle};
-                for iRay=1:bundle.nRays                    
+                for iRay=1:bundle.nRays
                     Ray=bundle.Ray(iRay);                    
-                    Ray.color
-                    bundle.Ray(iRay).p=plot(self.x_range(1),self.y_range(1),'-','color',Ray.color,'markerSize',2);
+                    bundle.Ray(iRay).p=plot(self.x_range(1),self.y_range(1),'-','color',Ray.color,'lineWidth',Ray.thickness);
                 end
-                bundle.Chief_ray.p=plot(self.x_range(1),self.y_range(1),'b-','lineWidth',2);
+                %bundle.Chief_ray.p=plot(self.x_range(1),self.y_range(1),'b-','lineWidth',2);
             end
             
             axis([self.x_range self.y_range])
@@ -274,7 +273,14 @@ classdef RayTracer < handle
                     Ray=Bundle.Ray(iRay);
                     M=Ray.history;
                     if ~isempty(M)
+                        %if iRay==round(Bundle.nRays/2)
                         set(Ray.p,'xData',M(:,1),'yData',M(:,2))
+                        %end
+                        %if iRay==round(Bundle.nRays/2)
+                        %    set(Bundle.Chief_ray.p,'xData',M(:,1),'yData',M(:,2))
+                        %else
+                            
+                        %end
                     end
                 end
             end
