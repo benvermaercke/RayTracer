@@ -16,13 +16,6 @@ classdef RayTracer < handle
         nRays_total=0;
         nSteps_total=0;
         
-        %%% Tracing
-        %current_object.medium=0;
-        %current_object.index=0;
-        %current_object.object.index_of_refraction=IOR_air;
-        %last_object=current_object;
-        %step_nr=0;
-        
         x_range=[-75 275];
         y_range=[-50 50];
     end
@@ -30,6 +23,11 @@ classdef RayTracer < handle
     methods
         function self=RayTracer(varargin)
             %disp('<RayTracer by Ben Vermaercke, 2015>')
+            
+            % check inputs
+            for iArg=1:2:nargin
+                self.(varargin{iArg})=varargin{iArg+1};
+            end
             
             self.correction_factor=(self.IOR_glass-self.IOR_air)/self.IOR_air*2;
         end
