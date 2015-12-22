@@ -16,8 +16,7 @@ classdef Bundle < handle
         
         % Ray parameters
         nRays=0;
-        %Ray=struct('next_position',[],'cur_angle',[],'step_size',[],'tracing',1,'p',0,'color',[1 0 0],'history',[]);
-        Rays=[];
+        Rays={};
     end
     
     methods
