@@ -78,7 +78,7 @@ classdef RayTracer < handle
                 
                 for iRay=1:Bundle.nRays
                     [iBundle iRay]
-                    Ray=Bundle.Ray(iRay);
+                    Ray=Bundle.Rays{iRay};
                     transition=0;
                     
                     step_nr=0;
@@ -206,7 +206,7 @@ classdef RayTracer < handle
                         
                         Ray.history=cat(1,Ray.history,Ray.next_position);
                         %Ray.history
-                        Bundle.Ray(iRay)=Ray;
+                        Bundle.Rays{iRay}=Ray;
                         
                         %%% Avoid long tracings
                         step_nr=step_nr+1;
@@ -250,8 +250,8 @@ classdef RayTracer < handle
             for iBundle=1:self.nBundles
                 bundle=self.Bundles{iBundle};
                 for iRay=1:bundle.nRays
-                    Ray=bundle.Ray(iRay);                    
-                    bundle.Ray(iRay).p=plot(self.x_range(1),self.y_range(1),'-','color',Ray.color,'lineWidth',Ray.thickness);
+                    Ray=bundle.Rays{iRay};                    
+                    bundle.Rays{iRay}.p=plot(self.x_range(1),self.y_range(1),'-','color',Ray.color,'lineWidth',Ray.thickness);
                 end                
             end
             
@@ -267,7 +267,7 @@ classdef RayTracer < handle
                 Bundle=self.Bundles{iBundle};
                 
                 for iRay=1:Bundle.nRays
-                    Ray=Bundle.Ray(iRay);
+                    Ray=Bundle.Rays{iRay};
                     M=Ray.history;
                     if ~isempty(M)                        
                         set(Ray.p,'xData',M(:,1),'yData',M(:,2))
