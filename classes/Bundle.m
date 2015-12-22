@@ -16,8 +16,7 @@ classdef Bundle < handle
         
         % Ray parameters
         nRays=0;
-        Ray=struct('next_position',[],'cur_angle',[],'step_size',[],'tracing',1,'p',0,'color',[1 0 0],'history',[]);
-        Chief_ray=struct('next_position',[],'cur_angle',[],'step_size',[],'tracing',1,'p',0,'color',[0 0 1],'history',[]);
+        Rays={};
     end
     
     methods
@@ -30,33 +29,21 @@ classdef Bundle < handle
             end
             
             % start construction
-            %if mod(self.nRays,2)==0&&self.nRays>3
-            %    self.nRays=self.nRays+1;
-            %end
-            
             switch self.bundle_type
                 case 1 % point sources
                     if self.nRays==1
                         angle_range=linspace(self.initial_direction-self.angle_spread/2,self.initial_direction+self.angle_spread/2,3);
                         angle_range=angle_range(2);
                     else
-                        angle_range=linspace(self.initial_direction-self.angle_spread/2,self.initial_direction+self.angle_spread/2,self.nRays);                        
+                        angle_range=linspace(self.initial_direction-self.angle_spread/2,self.initial_direction+self.angle_spread/2,self.nRays);
                     end
                     
                     for iRay=1:self.nRays
-                        self.Ray(iRay).next_position=self.center_location;
-                        self.Ray(iRay).cur_angle=angle_range(iRay);
-                        self.Ray(iRay).step_size=self.step_size;
-                        self.Ray(iRay).tracing=1;
-                        self.Ray(iRay).p=0;
-                        self.Ray(iRay).color=self.color;
-                        self.Ray(iRay).thickness=1;
-                        self.Ray(iRay).history=[];
+                        self.Rays{iRay}=Ray('next_position',self.center_location,'cur_angle',angle_range(iRay),'step_size',self.step_size,'color',self.color);
                         if mod(self.nRays,2)==1&&iRay==round(self.nRays/2)
-                            self.Ray(iRay).thickness=2;
-                            %self.Chief_ray=self.Ray(iRay);
+                            %%% layout chief ray
+                            self.Rays{iRay}.thickness=2;
                         end
-                        
                     end
                 case 2 % collimated
                     if self.nRays==1
@@ -69,17 +56,10 @@ classdef Bundle < handle
                     end
                     
                     for iRay=1:self.nRays
-                        self.Ray(iRay).next_position=M(iRay,:);
-                        self.Ray(iRay).cur_angle=self.initial_direction;
-                        self.Ray(iRay).step_size=self.step_size;
-                        self.Ray(iRay).tracing=1;
-                        self.Ray(iRay).p=0;
-                        self.Ray(iRay).color=self.color;
-                        self.Ray(iRay).thickness=1;
-                        self.Ray(iRay).history=[];
+                        self.Rays{iRay}=Ray('next_position',M(iRay,:),'cur_angle',self.initial_direction,'step_size',self.step_size,'color',self.color);
                         if mod(self.nRays,2)==1&&iRay==round(self.nRays/2)
-                            self.Ray(iRay).thickness=2;
-                            %self.Chief_ray=self.Ray(iRay);
+                            %%% layout chief ray
+                            self.Rays{iRay}.thickness=2;
                         end
                     end
             end

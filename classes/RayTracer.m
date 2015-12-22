@@ -16,13 +16,6 @@ classdef RayTracer < handle
         nRays_total=0;
         nSteps_total=0;
         
-        %%% Tracing
-        %current_object.medium=0;
-        %current_object.index=0;
-        %current_object.object.index_of_refraction=IOR_air;
-        %last_object=current_object;
-        %step_nr=0;
-        
         x_range=[-75 275];
         y_range=[-50 50];
     end
@@ -30,6 +23,11 @@ classdef RayTracer < handle
     methods
         function self=RayTracer(varargin)
             %disp('<RayTracer by Ben Vermaercke, 2015>')
+            
+            % check inputs
+            for iArg=1:2:nargin
+                self.(varargin{iArg})=varargin{iArg+1};
+            end
             
             self.correction_factor=(self.IOR_glass-self.IOR_air)/self.IOR_air*2;
         end
@@ -80,7 +78,7 @@ classdef RayTracer < handle
                 
                 for iRay=1:Bundle.nRays
                     [iBundle iRay]
-                    Ray=Bundle.Ray(iRay);
+                    Ray=Bundle.Rays{iRay};
                     transition=0;
                     
                     step_nr=0;
@@ -208,7 +206,7 @@ classdef RayTracer < handle
                         
                         Ray.history=cat(1,Ray.history,Ray.next_position);
                         %Ray.history
-                        Bundle.Ray(iRay)=Ray;
+                        Bundle.Rays{iRay}=Ray;
                         
                         %%% Avoid long tracings
                         step_nr=step_nr+1;
@@ -252,10 +250,9 @@ classdef RayTracer < handle
             for iBundle=1:self.nBundles
                 bundle=self.Bundles{iBundle};
                 for iRay=1:bundle.nRays
-                    Ray=bundle.Ray(iRay);                    
-                    bundle.Ray(iRay).p=plot(self.x_range(1),self.y_range(1),'-','color',Ray.color,'lineWidth',Ray.thickness);
-                end
-                %bundle.Chief_ray.p=plot(self.x_range(1),self.y_range(1),'b-','lineWidth',2);
+                    Ray=bundle.Rays{iRay};                    
+                    bundle.Rays{iRay}.p=plot(self.x_range(1),self.y_range(1),'-','color',Ray.color,'lineWidth',Ray.thickness);
+                end                
             end
             
             axis([self.x_range self.y_range])
@@ -270,17 +267,10 @@ classdef RayTracer < handle
                 Bundle=self.Bundles{iBundle};
                 
                 for iRay=1:Bundle.nRays
-                    Ray=Bundle.Ray(iRay);
+                    Ray=Bundle.Rays{iRay};
                     M=Ray.history;
-                    if ~isempty(M)
-                        %if iRay==round(Bundle.nRays/2)
+                    if ~isempty(M)                        
                         set(Ray.p,'xData',M(:,1),'yData',M(:,2))
-                        %end
-                        %if iRay==round(Bundle.nRays/2)
-                        %    set(Bundle.Chief_ray.p,'xData',M(:,1),'yData',M(:,2))
-                        %else
-                            
-                        %end
                     end
                 end
             end
