@@ -77,7 +77,7 @@ classdef RayTracer < handle
                 Bundle=self.Bundles{iBundle};
                 
                 for iRay=1:Bundle.nRays
-                    [iBundle iRay]
+                    %[iBundle iRay]
                     Ray=Bundle.Rays{iRay};
                     transition=0;
                     
