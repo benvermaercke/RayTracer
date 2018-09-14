@@ -1,7 +1,8 @@
 clear all
 clc
 
-addpath(genpath(fileparts(mfilename('fullpath'))))
+addpath(genpath(core.up1(fileparts(mfilename('fullpath')))))
+
 
 RT=RayTracer();
 

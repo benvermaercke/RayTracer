@@ -10,7 +10,7 @@ RT.add_absorber('height',300,'spatial_location',[200 0])
 kappa_val=-3.5;
 focal_length=50;
 
-switch 1
+switch 5
     case 1 % show how outer rays for focii at different distance from lens => blurry image
         RT.y_range=[-300 300];
         RT.add_lens('radii',[20 -20],'spatial_location',[0 0],'height',25.4*1,'thickness',12,'kappa',1)
