@@ -1,7 +1,8 @@
-clear all
+clearvars
 clc
 
-addpath(genpath(fileparts(mfilename('fullpath'))))
+fname=mfilename('fullpath');
+addpath(genpath(core.up1(fileparts(fname))))
 
 RT=RayTracer();
 
@@ -79,7 +80,8 @@ switch 5
         RT.add_bundle('bundle_type',2,'nRays',11,'center_location',[-50 -8.5],'initial_direction',10/180*pi,'beam_spread',10,'color',[0 1 1])
     
 end
-%%
+%% 
+
 RT.draw_space()
 
 %%
